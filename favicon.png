@@ -1,0 +1,6 @@
+# Agentic Signal — Blog Upload
+
+Post content: edit `posts.json`. Copy a `{}` block, change fields. Push.
+Allowed tags: Web Design, SEO / AEO / GEO, PPC / Email Marketing, Social Media.
+Pages: `/` (posts), `/topics.html`, `/about.html`.
+Post template: `post-template.html` — copy to `post-[slug].html`, swap content.
