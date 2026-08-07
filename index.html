@@ -1,698 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebScape — A Guest Post Platform for Marketing, Websites & Growth</title>
-  <meta name="description" content="WebScape is a premium guest post publication for marketers, developers, and entrepreneurs sharing insights on SEO, web design, content strategy, and digital growth.">
-  <meta name="keywords" content="guest post, marketing blog, SEO, web design, content strategy, digital growth, WebScape">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --navy: #0a0e27;
-      --navy-light: #111638;
-      --navy-mid: #1a1f45;
-      --cream: #fdf8f3;
-      --cream-dark: #f5ede3;
-      --gold: #d4a843;
-      --gold-light: #e8c36a;
-      --gold-dark: #b8922e;
-      --white: #ffffff;
-      --gray-200: #e5e5ea;
-      --gray-300: #c7c7cc;
-      --gray-400: #8e8e93;
-      --gray-500: #636366;
-      --text-primary: #1a1a2e;
-      --text-secondary: #4a4a5a;
-      --text-muted: #7a7a8a;
-      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-heading: 'Cormorant Garamond', 'Georgia', serif;
-      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-    body { font-family: var(--font-body); background: var(--cream); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
-    a { text-decoration: none; color: inherit; transition: var(--transition); }
-    ul { list-style: none; }
-    img { max-width: 100%; display: block; }
-
-    /* ---- NAV ---- */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: rgba(253, 248, 243, 0.88);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(10, 14, 39, 0.05);
-      height: 72px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 48px;
-    }
-    .nav__logo {
-      font-family: var(--font-heading); font-size: 1.6rem; font-weight: 700;
-      color: var(--navy); letter-spacing: -0.02em;
-    }
-    .nav__logo span { color: var(--gold); }
-    .nav__links { display: flex; align-items: center; gap: 36px; }
-    .nav__links a {
-      font-size: 0.875rem; font-weight: 500; color: var(--text-secondary);
-      letter-spacing: 0.01em;
-    }
-    .nav__links a:hover { color: var(--navy); transform: translateY(-1px); }
-    .nav__cta {
-      background: var(--navy); color: var(--white) !important; padding: 10px 24px;
-      border-radius: 8px; font-weight: 600; font-size: 0.85rem !important;
-    }
-    .nav__cta:hover { background: var(--gold-dark) !important; transform: translateY(-2px) !important; box-shadow: 0 8px 24px rgba(212, 168, 67, 0.3); }
-    .nav__toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-    .nav__toggle span { display: block; width: 24px; height: 2px; background: var(--navy); margin: 6px 0; transition: var(--transition); border-radius: 2px; }
-
-    /* ---- HERO ---- */
-    .hero {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      text-align: center; position: relative; overflow: hidden;
-      padding: 120px 24px 80px;
-    }
-    .hero__bg {
-      position: absolute; inset: 0; z-index: 0; opacity: 0.5;
-    }
-    .hero__content { position: relative; z-index: 1; max-width: 820px; }
-    .hero__badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.14em; color: var(--gold-dark);
-      background: rgba(212, 168, 67, 0.1); padding: 8px 20px;
-      border-radius: 100px; margin-bottom: 32px;
-      border: 1px solid rgba(212, 168, 67, 0.2);
-    }
-    .hero__badge::before { content: '◆'; font-size: 0.5rem; }
-    .hero__title {
-      font-family: var(--font-heading);
-      font-size: clamp(2.8rem, 6.5vw, 5.5rem);
-      font-weight: 700; line-height: 1.08; letter-spacing: -0.03em;
-      color: var(--navy); margin-bottom: 28px;
-    }
-    .hero__title .gradient-text {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--gold) 50%, var(--navy) 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 6s ease-in-out infinite;
-    }
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% center; }
-      50% { background-position: 100% center; }
-    }
-    .hero__sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--text-secondary); max-width: 580px;
-      margin: 0 auto 44px; line-height: 1.7;
-    }
-    .hero__actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--navy); color: var(--white);
-      padding: 16px 36px; border-radius: 10px;
-      font-weight: 600; font-size: 0.95rem;
-      border: none; cursor: pointer; transition: var(--transition);
-    }
-    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 16px 48px rgba(10, 14, 39, 0.2); background: var(--navy-mid); }
-    .btn-primary svg { width: 16px; height: 16px; }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent; color: var(--navy);
-      padding: 16px 36px; border-radius: 10px;
-      font-weight: 600; font-size: 0.95rem;
-      border: 1.5px solid var(--gray-200); cursor: pointer; transition: var(--transition);
-    }
-    .btn-secondary:hover { border-color: var(--gold); color: var(--gold-dark); transform: translateY(-3px); }
-    .hero__scroll {
-      margin-top: 60px; display: flex; flex-direction: column; align-items: center; gap: 8px;
-      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;
-      color: var(--text-muted); animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
-    .hero__scroll svg { width: 20px; height: 20px; stroke: var(--text-muted); }
-
-    /* ---- SECTION SHARED ---- */
-    .section { padding: 120px 48px; }
-    .section__label {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.16em; color: var(--gold-dark); margin-bottom: 16px;
-    }
-    .section__heading {
-      font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700; color: var(--navy); line-height: 1.15;
-      letter-spacing: -0.025em; margin-bottom: 20px;
-    }
-    .section__desc {
-      font-size: 1.05rem; color: var(--text-secondary);
-      max-width: 520px; line-height: 1.7;
-    }
-
-    /* ---- FEATURED ARTICLES ---- */
-    .featured { background: var(--white); }
-    .featured__inner { max-width: 1200px; margin: 0 auto; }
-    .featured__header { text-align: center; margin-bottom: 64px; }
-    .featured__header .section__desc { margin: 0 auto; }
-    .featured__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    .card {
-      background: var(--cream); border-radius: 16px; overflow: hidden;
-      transition: var(--transition); display: flex; flex-direction: column;
-      border: 1px solid transparent;
-    }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 24px 64px rgba(10, 14, 39, 0.08); border-color: var(--gray-200); }
-    .card__image {
-      aspect-ratio: 16 / 10; position: relative; overflow: hidden;
-    }
-    .card__image svg { width: 100%; height: 100%; display: block; }
-    .card__body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
-    .card__category {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--gold-dark); margin-bottom: 12px;
-    }
-    .card__title {
-      font-family: var(--font-heading); font-size: 1.35rem; font-weight: 700;
-      color: var(--navy); line-height: 1.3; margin-bottom: 12px;
-      letter-spacing: -0.01em;
-    }
-    .card:hover .card__title { color: var(--gold-dark); }
-    .card__excerpt {
-      font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
-      margin-bottom: 20px; flex-grow: 1;
-    }
-    .card__footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--gray-200); }
-    .card__author { display: flex; align-items: center; gap: 10px; }
-    .card__avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700; color: var(--white);
-    }
-    .card__author-name { font-size: 0.8rem; font-weight: 600; color: var(--text-primary); }
-    .card__date { font-size: 0.75rem; color: var(--text-muted); }
-
-    /* ---- ABOUT ---- */
-    .about__inner {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-    }
-    .about__visual {
-      aspect-ratio: 1; border-radius: 24px; overflow: hidden;
-      position: relative;
-    }
-    .about__visual svg { width: 100%; height: 100%; }
-    .about__text .section__desc { margin-bottom: 36px; }
-    .about__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
-    .stat__number {
-      font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700;
-      color: var(--navy); line-height: 1;
-    }
-    .stat__number span { color: var(--gold); }
-    .stat__label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
-
-    /* ---- CATEGORIES ---- */
-    .categories { background: var(--navy); color: var(--white); }
-    .categories__inner { max-width: 1200px; margin: 0 auto; }
-    .categories__header { text-align: center; margin-bottom: 64px; }
-    .categories__header .section__label { color: var(--gold-light); }
-    .categories__header .section__heading { color: var(--white); }
-    .categories__header .section__desc { color: rgba(255, 255, 255, 0.55); margin: 0 auto; }
-    .categories__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .cat-card {
-      background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px; padding: 32px 24px; text-align: center;
-      transition: var(--transition); cursor: pointer;
-    }
-    .cat-card:hover { background: rgba(212, 168, 67, 0.1); border-color: rgba(212, 168, 67, 0.3); transform: translateY(-4px); }
-    .cat-card__icon {
-      width: 48px; height: 48px; margin: 0 auto 16px;
-      background: rgba(212, 168, 67, 0.12); border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .cat-card__icon svg { width: 22px; height: 22px; }
-    .cat-card__name { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
-    .cat-card__count { font-size: 0.775rem; color: rgba(255, 255, 255, 0.4); font-weight: 500; }
-
-    /* ---- CTA ---- */
-    .cta { position: relative; overflow: hidden; }
-    .cta__inner {
-      max-width: 900px; margin: 0 auto; text-align: center;
-      background: var(--navy); border-radius: 24px; padding: 80px 60px;
-      position: relative; overflow: hidden;
-    }
-    .cta__bg { position: absolute; inset: 0; opacity: 0.3; }
-    .cta__content { position: relative; z-index: 1; }
-    .cta__content .section__label { color: var(--gold-light); }
-    .cta__content .section__heading { color: var(--white); margin-bottom: 16px; }
-    .cta__content .section__desc { color: rgba(255, 255, 255, 0.6); margin: 0 auto 40px; }
-    .btn-gold {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--gold); color: var(--navy);
-      padding: 16px 40px; border-radius: 10px;
-      font-weight: 700; font-size: 0.95rem;
-      border: none; cursor: pointer; transition: var(--transition);
-    }
-    .btn-gold:hover { background: var(--gold-light); transform: translateY(-3px) scale(1.02); box-shadow: 0 16px 48px rgba(212, 168, 67, 0.3); }
-    .cta__features {
-      display: flex; justify-content: center; gap: 40px; margin-top: 36px; flex-wrap: wrap;
-    }
-    .cta__feature { display: flex; align-items: center; gap: 8px; font-size: 0.825rem; color: rgba(255, 255, 255, 0.5); }
-    .cta__feature svg { width: 16px; height: 16px; stroke: var(--gold); }
-
-    /* ---- FOOTER ---- */
-    .footer { background: var(--navy); border-top: 1px solid rgba(255, 255, 255, 0.06); }
-    .footer__inner {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
-    }
-    .footer__brand-desc { font-size: 0.875rem; color: rgba(255, 255, 255, 0.4); line-height: 1.7; margin-top: 12px; max-width: 280px; }
-    .footer__col h5 {
-      font-family: var(--font-heading); font-size: 1rem; font-weight: 700;
-      color: var(--white); margin-bottom: 20px;
-    }
-    .footer__col ul { display: flex; flex-direction: column; gap: 10px; }
-    .footer__col a { font-size: 0.85rem; color: rgba(255, 255, 255, 0.4); }
-    .footer__col a:hover { color: var(--gold); transform: translateX(4px); display: inline-block; }
-    .footer__bottom {
-      max-width: 1200px; margin: 0 auto; padding-top: 32px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.775rem; color: rgba(255, 255, 255, 0.3);
-    }
-    .footer__logo-small { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; color: var(--white); }
-    .footer__logo-small span { color: var(--gold); }
-
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 1024px) {
-      .section { padding: 80px 32px; }
-      .nav { padding: 0 32px; }
-      .featured__grid { grid-template-columns: repeat(2, 1fr); }
-      .categories__grid { grid-template-columns: repeat(2, 1fr); }
-      .about__inner { gap: 48px; }
-      .footer__inner { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 768px) {
-      .nav { padding: 0 20px; height: 64px; }
-      .nav__links {
-        display: none; position: fixed; top: 64px; left: 0; right: 0;
-        background: var(--cream); flex-direction: column; padding: 24px;
-        gap: 16px; border-bottom: 1px solid var(--gray-200);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      }
-      .nav__links.active { display: flex; }
-      .nav__toggle { display: block; }
-
-      .hero { min-height: auto; padding: 120px 20px 80px; }
-      .hero__actions { flex-direction: column; align-items: center; }
-      .btn-primary, .btn-secondary { width: 100%; justify-content: center; max-width: 320px; }
-
-      .section { padding: 60px 20px; }
-      .featured__grid { grid-template-columns: 1fr; }
-      .about__inner { grid-template-columns: 1fr; gap: 40px; }
-      .about__visual { max-width: 400px; margin: 0 auto; }
-      .about__stats { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-      .stat__number { font-size: 1.6rem; }
-      .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .cat-card { padding: 24px 16px; }
-      .cta__inner { padding: 48px 24px; border-radius: 16px; }
-      .cta__features { flex-direction: column; align-items: center; gap: 12px; }
-      .footer__inner { grid-template-columns: 1fr; gap: 32px; }
-      .footer__bottom { flex-direction: column; gap: 8px; text-align: center; }
-    }
-
-    @media (max-width: 380px) {
-      html { font-size: 15px; }
-      .categories__grid { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Signal — Marketing Intelligence at AI Speed</title>
+<meta name="description" content="Agentic marketing, AI search strategy, content clusters, and the signals that move markets. Professional marketing intelligence for operators.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+:root{--ink:#0a0a0c;--paper:#faf9f7;--surface:#f2f2f0;--accent:#c41e3a;--muted:#6e6e78;--line:#e5e4e0;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif;}
+body{background:var(--paper);color:var(--ink);line-height:1.6;}
+header{background:var(--ink);color:#fff;padding:5rem 6vw 6rem;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-30%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(196,30,58,.22),transparent 70%);border-radius:50%;pointer-events:none;}
+.header-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.header-inner h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:3.8rem;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem;}
+.header-inner h1 span{color:var(--accent);font-style:italic;font-weight:400;}
+.tagline{color:#999;font-size:1.05rem;font-weight:300;max-width:560px;}
+nav{max-width:1200px;margin:0 auto;padding:1.2rem 6vw;background:rgba(250,249,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;display:flex;gap:2.2rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+nav a{color:var(--muted);text-decoration:none;transition:color .2s;}nav a:hover{color:var(--ink);}
+main{max-width:1200px;margin:0 auto;padding:5rem 6vw 12rem;}
+.section-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:600;margin-bottom:2rem;}
+.posts{display:flex;flex-direction:column;gap:0;}
+.post-card{display:grid;grid-template-columns:1fr 280px;gap:4rem;padding:3.5rem 0;border-bottom:1px solid var(--line);align-items:start;transition:background .2s;}
+.post-card:first-of-type{padding-top:0;}
+.post-card:hover{background:rgba(0,0,0,.005);}
+.post-card h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:2.1rem;line-height:1.15;letter-spacing:-.02em;margin-bottom:.9rem;}
+.post-card h2 a{color:inherit;text-decoration:none;}
+.post-card p{color:#555;font-size:.95rem;line-height:1.7;max-width:640px;}
+.meta{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.08em;line-height:1.7;}
+.meta .tags span{display:inline-block;margin-top:.6rem;padding:.2rem .5rem;background:var(--surface);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-size:.7rem;margin-right:.3rem;text-transform:none;letter-spacing:normal;}
+.author{margin-top:.5rem;color:#888;}
+footer{border-top:1px solid var(--line);padding:4rem 6vw;text-align:center;color:#999;font-size:.82rem;background:#f6f6f4;}
+@media(max-width:880px){.post-card{grid-template-columns:1fr;gap:1.2rem;}.header-inner h1{font-size:2.4rem;}}
+</style>
 </head>
 <body>
-
-  <!-- ========== NAVIGATION ========== -->
-  <header class="nav" role="banner">
-    <a href="index.html" class="nav__logo">Web<span>Scape</span></a>
-    <nav>
-      <ul class="nav__links" id="navLinks">
-        <li><a href="#featured">Articles</a></li>
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contribute" class="nav__cta">Write for Us</a></li>
-      </ul>
-    </nav>
-    <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-  </header>
-
-  <main>
-    <!-- ========== HERO ========== -->
-    <section class="hero">
-      <svg class="hero__bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="heroG1" cx="20%" cy="30%" r="60%"><stop offset="0%" stop-color="#d4a843" stop-opacity="0.08"/><stop offset="100%" stop-color="#d4a843" stop-opacity="0"/></radialGradient>
-          <radialGradient id="heroG2" cx="80%" cy="70%" r="50%"><stop offset="0%" stop-color="#0a0e27" stop-opacity="0.05"/><stop offset="100%" stop-color="#0a0e27" stop-opacity="0"/></radialGradient>
-        </defs>
-        <rect width="1440" height="900" fill="url(#heroG1)"/>
-        <rect width="1440" height="900" fill="url(#heroG2)"/>
-        <circle cx="200" cy="150" r="180" fill="none" stroke="#d4a843" stroke-opacity="0.06" stroke-width="1"/>
-        <circle cx="1200" cy="700" r="240" fill="none" stroke="#0a0e27" stroke-opacity="0.04" stroke-width="1"/>
-        <circle cx="700" cy="400" r="320" fill="none" stroke="#d4a843" stroke-opacity="0.04" stroke-width="0.5"/>
-        <line x1="0" y1="450" x2="1440" y2="450" stroke="#0a0e27" stroke-opacity="0.02" stroke-width="0.5"/>
-      </svg>
-
-      <div class="hero__content">
-        <div class="hero__badge">Guest Post Publication</div>
-        <h1 class="hero__title">Ideas That Shape<br>the <span class="gradient-text">Digital Landscape</span></h1>
-        <p class="hero__sub">A curated platform where marketers, developers, and founders share actionable insights on growth, web strategy, and the future of digital.</p>
-        <div class="hero__actions">
-          <a href="#featured" class="btn-primary">
-            Read Latest
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-          <a href="#contribute" class="btn-secondary">Submit a Post</a>
-        </div>
-        <div class="hero__scroll">
-          Scroll to explore
-          <svg viewBox="0 0 20 20" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M10 4v12M6 12l4 4 4-4"/></svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== FEATURED ARTICLES ========== -->
-    <section class="section featured" id="featured">
-      <div class="featured__inner">
-        <div class="featured__header">
-          <p class="section__label">Featured Guest Articles</p>
-          <h2 class="section__heading">Latest from Our Contributors</h2>
-          <p class="section__desc">Hand-picked articles from industry voices on the topics that matter most to digital professionals.</p>
-        </div>
-
-        <div class="featured__grid">
-          <!-- Card 1 -->
-          <a href="posts/future-of-seo-2025.html" class="card">
-            <div class="card__image">
-              <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                <defs><linearGradient id="c1g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a0e27"/><stop offset="100%" stop-color="#1a1f45"/></linearGradient></defs>
-                <rect width="400" height="250" fill="url(#c1g)"/>
-                <circle cx="320" cy="60" r="80" fill="#d4a843" opacity="0.12"/>
-                <circle cx="80" cy="200" r="60" fill="#d4a843" opacity="0.08"/>
-                <rect x="60" y="80" width="120" height="3" rx="1.5" fill="#d4a843" opacity="0.25"/>
-                <rect x="60" y="100" width="80" height="3" rx="1.5" fill="white" opacity="0.1"/>
-                <rect x="60" y="120" width="160" height="3" rx="1.5" fill="white" opacity="0.06"/>
-                <polygon points="280,140 340,200 220,200" fill="#d4a843" opacity="0.1"/>
-              </svg>
-            </div>
-            <div class="card__body">
-              <span class="card__category">SEO & Search</span>
-              <h3 class="card__title">The Future of SEO in 2025: What Every Marketer Needs to Know</h3>
-              <p class="card__excerpt">From AI-driven search to zero-click results, the SEO landscape is shifting fast. Here's how to stay ahead of the curve.</p>
-              <div class="card__footer">
-                <div class="card__author">
-                  <div class="card__avatar">SR</div>
-                  <span class="card__author-name">Sarah Reynolds</span>
-                </div>
-                <span class="card__date">Jan 15, 2025</span>
-              </div>
-            </div>
-          </a>
-
-          <!-- Card 2 -->
-          <a href="posts/content-marketing-strategy.html" class="card">
-            <div class="card__image">
-              <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                <defs><linearGradient id="c2g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#111638"/><stop offset="100%" stop-color="#0a0e27"/></linearGradient></defs>
-                <rect width="400" height="250" fill="url(#c2g)"/>
-                <rect x="40" y="40" width="140" height="170" rx="8" fill="white" opacity="0.04" stroke="#d4a843" stroke-opacity="0.15" stroke-width="1"/>
-                <rect x="56" y="65" width="60" height="4" rx="2" fill="#d4a843" opacity="0.3"/>
-                <rect x="56" y="80" width="108" height="3" rx="1.5" fill="white" opacity="0.1"/>
-                <rect x="56" y="92" width="90" height="3" rx="1.5" fill="white" opacity="0.07"/>
-                <rect x="56" y="104" width="100" height="3" rx="1.5" fill="white" opacity="0.05"/>
-                <circle cx="310" cy="130" r="70" fill="none" stroke="#d4a843" stroke-opacity="0.12" stroke-width="1"/>
-                <circle cx="310" cy="130" r="40" fill="#d4a843" opacity="0.06"/>
-                <path d="M230 200 Q 300 160 370 210" stroke="#d4a843" stroke-opacity="0.1" stroke-width="1.5" fill="none"/>
-              </svg>
-            </div>
-            <div class="card__body">
-              <span class="card__category">Content Strategy</span>
-              <h3 class="card__title">Building a Content Engine That Drives 10x Organic Growth</h3>
-              <p class="card__excerpt">A step-by-step framework for creating content systems that compound over time and drive sustainable traffic.</p>
-              <div class="card__footer">
-                <div class="card__author">
-                  <div class="card__avatar">MK</div>
-                  <span class="card__author-name">Marcus Kim</span>
-                </div>
-                <span class="card__date">Jan 8, 2025</span>
-              </div>
-            </div>
-          </a>
-
-          <!-- Card 3 -->
-          <a href="posts/web-performance-optimization.html" class="card">
-            <div class="card__image">
-              <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                <defs><linearGradient id="c3g" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0a0e27"/><stop offset="100%" stop-color="#111638"/></linearGradient></defs>
-                <rect width="400" height="250" fill="url(#c3g)"/>
-                <line x1="80" y1="200" x2="120" y2="120" stroke="#d4a843" stroke-opacity="0.3" stroke-width="2"/>
-                <line x1="120" y1="120" x2="160" y2="150" stroke="#d4a843" stroke-opacity="0.3" stroke-width="2"/>
-                <line x1="160" y1="150" x2="200" y2="80" stroke="#d4a843" stroke-opacity="0.3" stroke-width="2"/>
-                <line x1="200" y1="80" x2="240" y2="100" stroke="#d4a843" stroke-opacity="0.3" stroke-width="2"/>
-                <line x1="240" y1="100" x2="280" y2="50" stroke="#d4a843" stroke-opacity="0.4" stroke-width="2"/>
-                <line x1="280" y1="50" x2="320" y2="70" stroke="#d4a843" stroke-opacity="0.3" stroke-width="2"/>
-                <circle cx="280" cy="50" r="5" fill="#d4a843" opacity="0.5"/>
-                <rect x="60" y="210" width="280" height="1" fill="white" opacity="0.06"/>
-                <rect x="340" y="40" width="30" height="30" rx="6" fill="#d4a843" opacity="0.1" stroke="#d4a843" stroke-opacity="0.15" stroke-width="0.5"/>
-              </svg>
-            </div>
-            <div class="card__body">
-              <span class="card__category">Web Performance</span>
-              <h3 class="card__title">Core Web Vitals: A Developer's Guide to Perfect Scores</h3>
-              <p class="card__excerpt">Practical optimization techniques that improve your LCP, FID, and CLS metrics for better rankings and user experience.</p>
-              <div class="card__footer">
-                <div class="card__author">
-                  <div class="card__avatar">AP</div>
-                  <span class="card__author-name">Aisha Patel</span>
-                </div>
-                <span class="card__date">Dec 28, 2024</span>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== ABOUT ========== -->
-    <section class="section about" id="about">
-      <div class="about__inner">
-        <div class="about__visual">
-          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="abg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a0e27"/><stop offset="100%" stop-color="#1a1f45"/></linearGradient>
-            </defs>
-            <rect width="500" height="500" rx="24" fill="url(#abg)"/>
-            <circle cx="250" cy="250" r="150" fill="none" stroke="#d4a843" stroke-opacity="0.1" stroke-width="1"/>
-            <circle cx="250" cy="250" r="100" fill="none" stroke="#d4a843" stroke-opacity="0.15" stroke-width="1"/>
-            <circle cx="250" cy="250" r="50" fill="#d4a843" opacity="0.08"/>
-            <circle cx="250" cy="100" r="8" fill="#d4a843" opacity="0.5"/>
-            <circle cx="380" cy="200" r="6" fill="#d4a843" opacity="0.3"/>
-            <circle cx="120" cy="300" r="6" fill="#d4a843" opacity="0.3"/>
-            <circle cx="350" cy="370" r="5" fill="#d4a843" opacity="0.2"/>
-            <circle cx="150" cy="170" r="5" fill="#d4a843" opacity="0.2"/>
-            <line x1="250" y1="100" x2="380" y2="200" stroke="#d4a843" stroke-opacity="0.08" stroke-width="0.5"/>
-            <line x1="380" y1="200" x2="350" y2="370" stroke="#d4a843" stroke-opacity="0.06" stroke-width="0.5"/>
-            <line x1="120" y1="300" x2="150" y2="170" stroke="#d4a843" stroke-opacity="0.06" stroke-width="0.5"/>
-            <line x1="250" y1="100" x2="150" y2="170" stroke="#d4a843" stroke-opacity="0.08" stroke-width="0.5"/>
-            <text x="190" y="245" fill="white" font-family="Cormorant Garamond, serif" font-size="32" font-weight="700" opacity="0.9">W</text>
-            <text x="222" y="245" fill="#d4a843" font-family="Cormorant Garamond, serif" font-size="32" font-weight="700" opacity="0.9">S</text>
-            <text x="175" y="270" fill="white" font-family="Inter, sans-serif" font-size="8" font-weight="400" opacity="0.3" letter-spacing="6">PUBLICATION</text>
-          </svg>
-        </div>
-
-        <div class="about__text">
-          <p class="section__label">About WebScape</p>
-          <h2 class="section__heading">Where Experts Share What Actually Works</h2>
-          <p class="section__desc">WebScape is an independent editorial platform built for practitioners — not pundits. Every article is contributed by a working professional sharing real strategies, tested frameworks, and honest perspectives on digital marketing, web development, and growth.</p>
-          <p class="section__desc" style="margin-top: 16px;">We believe the best insights come from people doing the work. No fluff. No theory without proof. Just actionable knowledge from the front lines of digital.</p>
-
-          <div class="about__stats">
-            <div>
-              <div class="stat__number">120<span>+</span></div>
-              <div class="stat__label">Guest Authors</div>
-            </div>
-            <div>
-              <div class="stat__number">340<span>+</span></div>
-              <div class="stat__label">Published Articles</div>
-            </div>
-            <div>
-              <div class="stat__number">50<span>K</span></div>
-              <div class="stat__label">Monthly Readers</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CATEGORIES ========== -->
-    <section class="section categories" id="categories">
-      <div class="categories__inner">
-        <div class="categories__header">
-          <p class="section__label">Browse Topics</p>
-          <h2 class="section__heading">Explore by Category</h2>
-          <p class="section__desc">Deep dives into the disciplines that drive digital success.</p>
-        </div>
-
-        <div class="categories__grid">
-          <div class="cat-card">
-            <div class="cat-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            </div>
-            <div class="cat-card__name">SEO & Search</div>
-            <div class="cat-card__count">48 articles</div>
-          </div>
-          <div class="cat-card">
-            <div class="cat-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            </div>
-            <div class="cat-card__name">Content Strategy</div>
-            <div class="cat-card__count">62 articles</div>
-          </div>
-          <div class="cat-card">
-            <div class="cat-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <div class="cat-card__name">Web Performance</div>
-            <div class="cat-card__count">35 articles</div>
-          </div>
-          <div class="cat-card">
-            <div class="cat-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-            </div>
-            <div class="cat-card__name">Growth & Acquisition</div>
-            <div class="cat-card__count">41 articles</div>
-          </div>
-          <div class="cat-card">
-            <div class="cat-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-            </div>
-            <div class="cat-card__name">Web Design & UX</div>
-            <div class="cat-card__count">53 articles</div>
-          </div>
-          <div class="cat-card">
-            <div class="cat-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            </div>
-            <div class="cat-card__name">Paid Advertising</div>
-            <div class="cat-card__count">29 articles</div>
-          </div>
-          <div class="cat-card">
-            <div class="cat-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div class="cat-card__name">Email Marketing</div>
-            <div class="cat-card__count">24 articles</div>
-          </div>
-          <div class="cat-card">
-            <div class="cat-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            </div>
-            <div class="cat-card__name">Analytics & Data</div>
-            <div class="cat-card__count">38 articles</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CTA ========== -->
-    <section class="section cta" id="contribute">
-      <div class="cta__inner">
-        <svg class="cta__bg" viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="ctag1" cx="30%" cy="40%" r="60%"><stop offset="0%" stop-color="#d4a843" stop-opacity="0.15"/><stop offset="100%" stop-color="#d4a843" stop-opacity="0"/></radialGradient></defs>
-          <rect width="900" height="400" fill="url(#ctag1)"/>
-          <circle cx="750" cy="80" r="120" fill="none" stroke="#d4a843" stroke-opacity="0.08" stroke-width="0.5"/>
-          <circle cx="100" cy="350" r="80" fill="none" stroke="white" stroke-opacity="0.03" stroke-width="0.5"/>
-        </svg>
-        <div class="cta__content">
-          <p class="section__label">Contribute</p>
-          <h2 class="section__heading">Share Your Expertise with Thousands</h2>
-          <p class="section__desc">We're always looking for fresh perspectives from experienced marketers, developers, and entrepreneurs. Get published, build authority, and reach our growing audience.</p>
-          <a href="mailto:contribute@webscape.blog" class="btn-gold">
-            Submit Your Article
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-          <div class="cta__features">
-            <div class="cta__feature">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Free to publish
-            </div>
-            <div class="cta__feature">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Editorial support
-            </div>
-            <div class="cta__feature">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Author bio & backlink
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ========== FOOTER ========== -->
-  <footer class="section footer" style="padding-bottom: 40px;">
-    <div class="footer__inner">
-      <div>
-        <div class="footer__logo-small">Web<span>Scape</span></div>
-        <p class="footer__brand-desc">A curated guest post publication where digital professionals share real insights on marketing, web development, and growth.</p>
-      </div>
-      <div class="footer__col">
-        <h5>Publication</h5>
-        <ul>
-          <li><a href="#featured">Latest Articles</a></li>
-          <li><a href="#categories">Categories</a></li>
-          <li><a href="#">Authors</a></li>
-          <li><a href="#">Newsletter</a></li>
-        </ul>
-      </div>
-      <div class="footer__col">
-        <h5>Contribute</h5>
-        <ul>
-          <li><a href="#contribute">Write for Us</a></li>
-          <li><a href="#">Guidelines</a></li>
-          <li><a href="#">Editorial Policy</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer__col">
-        <h5>Connect</h5>
-        <ul>
-          <li><a href="#">Twitter / X</a></li>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">RSS Feed</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer__bottom" style="margin-top: 40px;">
-      <span>© 2025 WebScape. All rights reserved.</span>
-      <span>Built for the digital community.</span>
-    </div>
-  </footer>
-
-  <script>
-    // Mobile nav toggle
-    document.getElementById('navToggle').addEventListener('click', function () {
-      document.getElementById('navLinks').classList.toggle('active');
-    });
-
-    // Close mobile nav on link click
-    document.querySelectorAll('.nav__links a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        document.getElementById('navLinks').classList.remove('active');
-      });
-    });
-  </script>
-</body>
+<header>
+  <div class="header-inner">
+    <h1><a href="index.html" style="color:inherit;text-decoration:none;">Agentic <span>Signal</span></a></h1>
+    <p class="tagline">Marketing intelligence at the speed of AI. Strategy, execution, and the signals that actually move markets.</p>
+  </div>
+</header>
+<nav><a href="index.html">Latest</a><a href="topics.html">Topics</a><a href="about.html">About</a></nav>
+<main>
+  <div class="section-label" id="sectionLabel">Latest Intelligence</div>
+  <section class="posts" id="posts"></section>
+<div id="pagination" style="display:flex;justify-content:center;gap:1rem;padding:2rem 0;font-family:'Inter',system-ui;font-size:.85rem;color:#777;align-items:center;"><button onclick="changePage(-1)" id="prevBtn" style="background:#0a0a0c;color:#fff;border:none;padding:.5rem 1rem;border-radius:4px;cursor:pointer;font-size:.8rem;opacity:1;">Previous</button><span id="pageInfo">Page 1 of 4</span><button onclick="changePage(1)" id="nextBtn" style="background:#0a0a0c;color:#fff;border:none;padding:.5rem 1rem;border-radius:4px;cursor:pointer;font-size:.8rem;opacity:1;">Next</button></div>
+</main>
+<footer>Agentic Signal — Professional marketing intelligence. Built for operators.</footer>
+<script>
+let allPosts=[];let currentPage=1;const perPage=5;const urlParams=new URLSearchParams(window.location.search);const topicFilter=urlParams.get('topic')||'';
+fetch('posts.json').then(r=>r.json()).then(data=>{
+  allPosts=topicFilter?data.posts.filter(p=>p.tags.includes(topicFilter)):data.posts;
+  renderPage();
+});
+function renderPage(){
+  const c=document.getElementById('posts');c.innerHTML='';
+  const start=(currentPage-1)*perPage;const end=start+perPage;
+  allPosts.slice(start,end).forEach(p=>{
+    c.insertAdjacentHTML('beforeend',`
+      <article class="post-card">
+        <div><h2><a href="#">${p.title}</a></h2><p>${p.excerpt}</p></div>
+        <aside class="meta">
+          <div>${p.date} · <span style="color:#aaa;">${p.readTime}</span></div>
+          <div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+          <div class="author">By ${p.author}</div>
+        </aside>
+      </article>`);
+  });
+  document.getElementById('sectionLabel').textContent=topicFilter?'Topic: '+topicFilter:'Latest Intelligence';
+  const totalPages=Math.ceil(allPosts.length/perPage);
+  document.getElementById('pageInfo').textContent=`Page ${currentPage} of ${totalPages}`;
+  document.getElementById('prevBtn').disabled=currentPage===1;document.getElementById('prevBtn').style.opacity=currentPage===1?'0.4':'1';
+  document.getElementById('nextBtn').disabled=currentPage===totalPages;document.getElementById('nextBtn').style.opacity=currentPage===totalPages?'0.4':'1';
+}
+function changePage(dir){currentPage+=dir;if(currentPage<1)currentPage=1;const totalPages=Math.ceil(allPosts.length/perPage);if(currentPage>totalPages)currentPage=totalPages;renderPage();}
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a275432518733b7f',t:'MTc4NjA5NTAyMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
