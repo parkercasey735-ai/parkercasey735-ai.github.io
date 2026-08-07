@@ -17,4 +17,5 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://agenticsignal.github.io/posts.json
+Sitemap: https://parkercasey735-ai.github.io/posts.json
+Sitemap: https://parkercasey735-ai.github.io/sitemap.xml
